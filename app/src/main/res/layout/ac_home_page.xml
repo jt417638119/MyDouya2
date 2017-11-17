@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/flContainer"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <android.support.v4.app.FragmentTabHost
+        android:visibility="gone"
+        android:id="@+id/tabHost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RadioGroup
+        android:id="@+id/rgTab"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/rbHome"
+            android:checked="true"
+            android:drawableTop="@drawable/bg_tabbar_home_selector"
+            android:drawablePadding="@dimen/space_xs"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="@string/lbl_home"
+            android:textSize="@dimen/txt_m"
+            android:textColor="@drawable/bg_home_text_selector"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/rbMessage"
+            android:drawableTop="@drawable/bg_tabbar_message_selector"
+            android:drawablePadding="@dimen/space_xs"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="@string/lbl_message"
+            android:textSize="@dimen/txt_m"
+            android:textColor="@drawable/bg_home_text_selector"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/rbProfile"
+            android:drawableTop="@drawable/bg_tabbar_profile_selector"
+            android:drawablePadding="@dimen/space_xs"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="@string/lbl_profile"
+            android:textSize="@dimen/txt_m"
+            android:textColor="@drawable/bg_home_text_selector"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+
+</LinearLayout>
