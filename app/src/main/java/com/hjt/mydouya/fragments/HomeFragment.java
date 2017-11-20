@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -23,9 +24,12 @@ import com.hjt.mydouya.entities.HttpResponse;
 import com.hjt.mydouya.entities.StatusEntity;
 import com.hjt.mydouya.networks.BaseNetWork;
 import com.hjt.mydouya.networks.CWUrls;
+import com.hjt.mydouya.presenter.HomePresenter;
+import com.hjt.mydouya.presenter.HomePresenterImp;
 import com.hjt.mydouya.utils.LogUtils;
 import com.hjt.mydouya.utils.SPUtils;
 import com.hjt.mydouya.views.PullToRefreshRecyclerView;
+import com.hjt.mydouya.views.mvpviews.HomeView;
 import com.sina.weibo.sdk.constant.WBConstants;
 import com.sina.weibo.sdk.exception.WeiboException;
 import com.sina.weibo.sdk.net.AsyncWeiboRunner;
@@ -42,7 +46,7 @@ import java.util.List;
  * Created by HJT on 2017/11/14.
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements HomeView {
     private WeiboParameters mWeiboParameters;
     private SPUtils mSPUtils;
     private PullToRefreshRecyclerView rlv;
@@ -50,6 +54,7 @@ public class HomeFragment extends BaseFragment {
     private RecyclerView.ItemDecoration mItemDecoration;
     private List<StatusEntity> mEntityList;
     private HomepageListAdapter mHomepageListAdapter;
+    private HomePresenter mPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,13 +62,11 @@ public class HomeFragment extends BaseFragment {
         mSPUtils = SPUtils.getIntantce(getActivity().getApplicationContext());
         mEntityList = new ArrayList<StatusEntity>();
         mHomepageListAdapter = new HomepageListAdapter(mEntityList,getActivity());
+        mPresenter = new HomePresenterImp(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rlv = (PullToRefreshRecyclerView) inflater.inflate(R.layout.v_common_recycleview, container, false);
-        init();
-
 //        View view = inflater.inflate(R.layout.fg_home,container,false);
         /*mAsyncWeiboRunner.requestAsync(url, mWeiboParameters, httpMethod, new RequestListener() {
             @Override
@@ -87,7 +90,7 @@ public class HomeFragment extends BaseFragment {
             }
         });*/
         // 网络请求
-        new BaseNetWork(getActivity(), CWUrls.HOME_TIME_LINE) {
+        /*new BaseNetWork(getActivity(), CWUrls.HOME_TIME_LINE) {
             @Override
             public WeiboParameters onPrepare() {
                 mWeiboParameters = new WeiboParameters(CWConstant.APP_KEY);
@@ -118,8 +121,12 @@ public class HomeFragment extends BaseFragment {
                 }
             }
 
-        }.get();
-
+        }.get();*/
+        // 初始化RecyclerView
+        rlv = (PullToRefreshRecyclerView) inflater.inflate(R.layout.v_common_recycleview, container, false);
+        init();
+        // 第一次加载
+        mPresenter.loadData();
         return rlv;
     }
     // 初始化RecyclerView
@@ -135,12 +142,12 @@ public class HomeFragment extends BaseFragment {
         rlv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<RecyclerView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
-
+                mPresenter.loadData();
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
-
+                mPresenter.loadMore();
             }
         });
         // 这是自定义的Item监听器，在HomepageListAdapter有匿名内部类
@@ -150,5 +157,19 @@ public class HomeFragment extends BaseFragment {
                 LogUtils.e(position+"");
             }
         });
+    }
+
+    @Override
+    public void onError(String error) {
+        rlv.onRefreshComplete();
+        Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccess(List<StatusEntity> list) {
+        rlv.onRefreshComplete();
+        mEntityList.clear();
+        mEntityList.addAll(list);
+        mHomepageListAdapter.notifyDataSetChanged();
     }
 }
