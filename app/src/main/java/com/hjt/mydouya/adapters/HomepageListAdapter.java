@@ -43,15 +43,18 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
         if (holder instanceof HomepageViewHolder) {
             HomepageViewHolder homepageViewHolder = (HomepageViewHolder) holder;
             StatusEntity entity = mDataSet.get(position);
+
+            /**
+             * 加载头像, 个人用户信息
+             */
             homepageViewHolder.tvUserName.setText(entity.user.screen_name);
             homepageViewHolder.tvTime.setText(TimeFormatUtils.parseToYYMMDD(entity.created_at));
             homepageViewHolder.tvSource.setText(Html.fromHtml(entity.source).toString());
-            homepageViewHolder.tvContent.setText(entity.text);
+            homepageViewHolder.tvContent.setText(entity.text); // 内容
 
             Glide.with(mContext)
                     .load(entity.user.profile_image_url)
                     .into(homepageViewHolder.ivHeader); // 加载头像
-
             List<PicUrlsEntity> pics = entity.pic_urls; // 提取内容图片
             if (pics != null && pics.size() > 0) {
                 // 因为是ViewHodler，可能会重复利用，则需要重新设置
@@ -65,7 +68,9 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
             }else {// 将图片框设置成不可见
                 homepageViewHolder.ivContent.setVisibility(View.GONE);
             }
-
+            /**
+             * 转发
+             */
             // 转发内容
             StatusEntity reStatus = entity.retweeted_status;// 转发内容
             if (reStatus != null) { // 转发内容非空
@@ -89,6 +94,13 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
             } else { // 没有转发
                 homepageViewHolder.llRe.setVisibility(View.GONE);
             }
+            /**
+             * 转发按钮，点赞，评论
+             */
+            homepageViewHolder.tvRetweet.setText(String.valueOf(entity.reposts_count));
+            homepageViewHolder.tvComment.setText(String.valueOf(entity.comments_count));
+            homepageViewHolder.tvLike.setText(String.valueOf(entity.attitudes_count));
+
         }
     }
 
@@ -112,6 +124,9 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
         public LinearLayout llRe;
         public TextView tvReContent;
         public ImageView ivReContent;
+        public TextView tvRetweet;
+        public TextView tvComment;
+        public TextView tvLike;
 
         public HomepageViewHolder(View itemView) {
             super(itemView);
@@ -138,6 +153,9 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
             tvContent = (TextView) itemView.findViewById(R.id.tvContent);
             llRe = (LinearLayout) itemView.findViewById(R.id.llRe);
             tvReContent = (TextView) itemView.findViewById(R.id.tvReContent);
+            tvRetweet = (TextView) itemView.findViewById(R.id.tvRetweet);
+            tvComment = (TextView) itemView.findViewById(R.id.tvComment);
+            tvLike = (TextView) itemView.findViewById(R.id.tvLike);
         }
     }
 
