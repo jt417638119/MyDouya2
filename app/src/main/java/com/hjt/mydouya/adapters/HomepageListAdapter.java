@@ -3,6 +3,7 @@ package com.hjt.mydouya.adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.hjt.mydouya.R;
 import com.hjt.mydouya.entities.PicUrlsEntity;
 import com.hjt.mydouya.entities.StatusEntity;
+import com.hjt.mydouya.utils.RichTextUtils;
 import com.hjt.mydouya.utils.TimeFormatUtils;
 
 import java.util.List;
@@ -50,8 +52,9 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
             homepageViewHolder.tvUserName.setText(entity.user.screen_name);
             homepageViewHolder.tvTime.setText(TimeFormatUtils.parseToYYMMDD(entity.created_at));
             homepageViewHolder.tvSource.setText(Html.fromHtml(entity.source).toString());
-            homepageViewHolder.tvContent.setText(entity.text); // 内容
-
+            homepageViewHolder.tvContent.setText(RichTextUtils.getRichText(mContext,entity.text)); // 内容
+            // 要为text中标志的字段添加点击事件
+            homepageViewHolder.tvContent.setMovementMethod(LinkMovementMethod.getInstance());
             Glide.with(mContext)
                     .load(entity.user.profile_image_url)
                     .into(homepageViewHolder.ivHeader); // 加载头像
@@ -76,7 +79,9 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
             if (reStatus != null) { // 转发内容非空
                 // 防止滚动的时候llRe不见了
                 homepageViewHolder.llRe.setVisibility(View.VISIBLE);
-                homepageViewHolder.tvReContent.setText(reStatus.text);
+                homepageViewHolder.tvReContent.setText(RichTextUtils.getRichText(mContext,reStatus.text)); // 内容
+                // 要为text中标志的字段添加点击事件
+                homepageViewHolder.tvReContent.setMovementMethod(LinkMovementMethod.getInstance());
                 // 提取内容图片
                 List<PicUrlsEntity> rePics = reStatus.pic_urls; // 提取内容图片
                 if (rePics != null && rePics.size() > 0) {

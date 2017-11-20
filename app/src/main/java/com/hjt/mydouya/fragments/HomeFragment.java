@@ -15,6 +15,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.hjt.mydouya.R;
 import com.hjt.mydouya.activities.CWConstant;
 import com.hjt.mydouya.adapters.HomepageListAdapter;
@@ -24,6 +25,7 @@ import com.hjt.mydouya.networks.BaseNetWork;
 import com.hjt.mydouya.networks.CWUrls;
 import com.hjt.mydouya.utils.LogUtils;
 import com.hjt.mydouya.utils.SPUtils;
+import com.hjt.mydouya.views.PullToRefreshRecyclerView;
 import com.sina.weibo.sdk.constant.WBConstants;
 import com.sina.weibo.sdk.exception.WeiboException;
 import com.sina.weibo.sdk.net.AsyncWeiboRunner;
@@ -43,7 +45,7 @@ import java.util.List;
 public class HomeFragment extends BaseFragment {
     private WeiboParameters mWeiboParameters;
     private SPUtils mSPUtils;
-    private RecyclerView rlv;
+    private PullToRefreshRecyclerView rlv;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.ItemDecoration mItemDecoration;
     private List<StatusEntity> mEntityList;
@@ -59,7 +61,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rlv = (RecyclerView) inflater.inflate(R.layout.v_common_recycleview, container, false);
+        rlv = (PullToRefreshRecyclerView) inflater.inflate(R.layout.v_common_recycleview, container, false);
         init();
 
 //        View view = inflater.inflate(R.layout.fg_home,container,false);
@@ -123,9 +125,24 @@ public class HomeFragment extends BaseFragment {
     // 初始化RecyclerView
     private void init() {
         mLayoutManager = new LinearLayoutManager(getActivity());
-        rlv.setLayoutManager(mLayoutManager);
-        rlv.addItemDecoration( new DividerItemDecoration(getActivity(),1));
-        rlv.setAdapter(mHomepageListAdapter);
+//        rlv.setLayoutManager(mLayoutManager);
+//        rlv.addItemDecoration( new DividerItemDecoration(getActivity(),1));
+//        rlv.setAdapter(mHomepageListAdapter);
+        rlv.getRefreshableView().setLayoutManager(mLayoutManager);
+        rlv.getRefreshableView().addItemDecoration(new DividerItemDecoration(getActivity(), 1));
+        rlv.getRefreshableView().setAdapter(mHomepageListAdapter);
+        rlv.setMode(PullToRefreshBase.Mode.BOTH);
+        rlv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<RecyclerView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+
+            }
+        });
         // 这是自定义的Item监听器，在HomepageListAdapter有匿名内部类
         mHomepageListAdapter.setOnItemClickListener(new HomepageListAdapter.OnItemClickListener() {
             @Override
