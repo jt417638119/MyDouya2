@@ -19,7 +19,9 @@
         android:id="@+id/rgTab"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/cw_white"
+        >
         <RadioButton
             android:id="@+id/rbHome"
             android:checked="true"

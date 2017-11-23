@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_top_round_white">
+
+        <TextView
+            android:id="@+id/tvMessage"
+            style="@style/tv_m_black_sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/space_m"
+            android:text="@string/empty_string"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_divider"
+            android:background="@color/cw_grey"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llSingleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_round_white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvSingleButton"
+            style="@style/tv_m_black_sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_tv_bottomright_round_selector"
+            android:gravity="center"
+            android:padding="@dimen/space_s"
+            android:text="@string/empty_string" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llTwoButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvNegativeButton"
+            style="@style/tv_m_black_sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/space_s"
+            android:background="@drawable/bg_tv_bottomleft_round_selector"
+            android:text="@string/empty_string" />
+
+        <View
+            android:layout_width="@dimen/height_divider"
+            android:layout_height="match_parent"
+            android:background="@color/cw_grey" />
+
+        <TextView
+            android:id="@+id/tvPositiveButton"
+            style="@style/tv_m_black_sl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/space_s"
+            android:background="@drawable/bg_tv_bottomright_round_selector"
+            android:text="@string/empty_string" />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -52,4 +52,9 @@ public class SPUtils {
         return mSharedPreferences.getBoolean(IS_LOGIN,false);
     }
 
+    public void clear() {
+        mEditor.clear();
+        mEditor.commit();
+    }
+
 }

@@ -36,7 +36,8 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weibo_content, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_weibo_content,
+                parent, false);
         return new HomepageViewHolder(view);
     }
 
@@ -52,7 +53,8 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
             homepageViewHolder.tvUserName.setText(entity.user.screen_name);
             homepageViewHolder.tvTime.setText(TimeFormatUtils.parseToYYMMDD(entity.created_at));
             homepageViewHolder.tvSource.setText(Html.fromHtml(entity.source).toString());
-            homepageViewHolder.tvContent.setText(RichTextUtils.getRichText(mContext,entity.text)); // 内容
+            homepageViewHolder.tvContent.setText(RichTextUtils.getRichText(mContext, entity.text)
+            ); // 内容
             // 要为text中标志的字段添加点击事件
             homepageViewHolder.tvContent.setMovementMethod(LinkMovementMethod.getInstance());
             Glide.with(mContext)
@@ -68,7 +70,7 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
                 Glide.with(mContext)
                         .load(pic.bmiddle_pic)
                         .into(homepageViewHolder.ivContent);
-            }else {// 将图片框设置成不可见
+            } else {// 将图片框设置成不可见
                 homepageViewHolder.ivContent.setVisibility(View.GONE);
             }
             /**
@@ -79,7 +81,9 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
             if (reStatus != null) { // 转发内容非空
                 // 防止滚动的时候llRe不见了
                 homepageViewHolder.llRe.setVisibility(View.VISIBLE);
-                homepageViewHolder.tvReContent.setText(RichTextUtils.getRichText(mContext,reStatus.text)); // 内容
+                // 前面要加上被转发内容的作者，这样正则才能匹配并且换颜色
+                homepageViewHolder.tvReContent.setText(RichTextUtils.getRichText(mContext,
+                        "@" + reStatus.user.screen_name +""+reStatus.text)); // 内容
                 // 要为text中标志的字段添加点击事件
                 homepageViewHolder.tvReContent.setMovementMethod(LinkMovementMethod.getInstance());
                 // 提取内容图片
@@ -93,7 +97,7 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
                     Glide.with(mContext)
                             .load(pic.bmiddle_pic)
                             .into(homepageViewHolder.ivReContent);
-                }else {// 将图片框设置成不可见
+                } else {// 将图片框设置成不可见
                     homepageViewHolder.ivReContent.setVisibility(View.GONE);
                 }
             } else { // 没有转发

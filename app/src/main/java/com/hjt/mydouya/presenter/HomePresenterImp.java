@@ -69,7 +69,7 @@ public class HomePresenterImp implements HomePresenter {
                 mWeiboParameters.put(WBConstants.AUTH_ACCESS_TOKEN, mSPUtils.getToken().getToken());// 第二次getToken是get Oauth2AccessToken里的mAccesToken
                 // 加了页码后，第一页下拉更新可以更新最新的东西。
                 mWeiboParameters.put(ParameterKeySet.PAGE, page);
-                mWeiboParameters.put(ParameterKeySet.COUNT, 3);
+                mWeiboParameters.put(ParameterKeySet.COUNT, 10);
                 return mWeiboParameters;
             }
 
