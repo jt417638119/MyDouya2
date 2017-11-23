@@ -58,6 +58,7 @@ public class ToolbarX {
     public void setNavigationIcon(int resId) {
         mToolbar.setNavigationIcon(resId);
     }
+
     // 不同的Activity设置是否呈现
     public void setDisplayHomeAsUpEnabled(Boolean show) {
         mActionBar.setDisplayHomeAsUpEnabled(show);

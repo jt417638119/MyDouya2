@@ -1,6 +1,8 @@
 package com.hjt.mydouya.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,10 +32,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         rlContent = (RelativeLayout) findViewById(R.id.rlContent);
 
         //IOC：控制反转，在父类中调用子类的实现
-        View view = getLayoutInflater().inflate(getLayoutId(), rlContent, false);// 将layout填充到rlContent
+        View view = getLayoutInflater().inflate(getLayoutId(), rlContent, false);//
+        // 将layout填充到rlContent
         rlContent.addView(view);
 
         mToolbarX = new ToolbarX(toolbar, this);
+
+        // 设置状态栏为透明
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+
+        }
 
     }
 
@@ -50,7 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.anim_out_left_right,R.anim.anim_in_left_right);
+        overridePendingTransition(R.anim.anim_out_left_right, R.anim.anim_in_left_right);
     }
 
     public ToolbarX getToolBar() {
@@ -59,7 +71,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         return mToolbarX;
     }
-
 
 
 }

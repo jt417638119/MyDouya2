@@ -19,6 +19,7 @@ import com.hjt.mydouya.utils.RichTextUtils;
 import com.hjt.mydouya.utils.TimeFormatUtils;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by HJT on 2017/11/16.
@@ -27,6 +28,7 @@ import java.util.List;
 public class HomepageListAdapter extends RecyclerView.Adapter {
     private List<StatusEntity> mDataSet;
     private OnItemClickListener mOnItemClickListener;
+    private OnCommentItemClickListener mOnCommentItemClickListener;
     private Context mContext;
 
     public HomepageListAdapter(List<StatusEntity> mDataSet, Context context) {
@@ -122,6 +124,10 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
     public void setOnItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;
     }
+    // 调用匿名内部类
+    public void setOnCommentItemClickListener(OnCommentItemClickListener listener) {
+        mOnCommentItemClickListener = listener;
+    }
 
     class HomepageViewHolder extends RecyclerView.ViewHolder {
         public ImageView ivHeader;
@@ -150,6 +156,15 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
+            tvComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnCommentItemClickListener != null ) {
+                        // 调用自定义的监听方法，不然就固定死了
+                        mOnCommentItemClickListener.onCommentItemClick(v,getLayoutPosition());
+                    }
+                }
+            });
         }
 
         public void initialize(View itemView) {
@@ -171,6 +186,11 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
     // 匿名内部类，供对象去实现，最后给父类调用
     public interface OnItemClickListener {
         void onItemClick(View v, int position);
+    }
+
+    // 匿名内部类，供对象去实现，最后给父类调用
+    public interface OnCommentItemClickListener {
+        void onCommentItemClick(View v, int position);
     }
 
 

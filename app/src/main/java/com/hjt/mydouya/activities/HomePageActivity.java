@@ -27,7 +27,8 @@ public class HomePageActivity extends BaseActivity {
     private RadioButton rbMessage;
     private RadioButton rbProfile;
     private Class fragment[];
-    private int menu_id = R.menu.menu_home;
+//    private int menu_id = R.menu.menu_home;
+    private int menu_id = -1;
 
 
     @Override
@@ -65,15 +66,19 @@ public class HomePageActivity extends BaseActivity {
                 switch (checkedId) {
                     case R.id.rbHome:
                         tabHost.setCurrentTab(0);
-                        menu_id = R.menu.menu_home;
+//                        menu_id = R.menu.menu_home;
+                        menu_id = -1;
+                        getToolBar().setTitle(R.string.lbl_home);
                         break;
                     case R.id.rbMessage:
                         menu_id = -1; // 不需要menu
                         tabHost.setCurrentTab(1);
+                        getToolBar().setTitle(R.string.lbl_message);
                         break;
                     case R.id.rbProfile:
                         menu_id = -1; // 不需要menu
                         tabHost.setCurrentTab(2);
+                        getToolBar().setTitle(R.string.lbl_profile);
                         break;
                 }
                 supportInvalidateOptionsMenu(); // 重新加载onCreateOptionsMenu

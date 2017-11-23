@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_s"
         android:background="@drawable/bg_lineframe_bottom_selector"
+        android:clickable="true"
         android:orientation="horizontal">
 
         <ImageView
@@ -58,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_s"
         android:background="@drawable/bg_lineframe_bottom_selector"
+        android:clickable="true"
         android:padding="@dimen/space_m"
         android:text="@string/lbl_my_weibo" />
 
@@ -68,6 +70,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_lineframe_bottom_selector"
         android:padding="@dimen/space_m"
+        android:clickable="true"
         android:text="@string/lbl_my_attention" />
 
     <TextView
@@ -77,6 +80,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_lineframe_bottom_selector"
         android:padding="@dimen/space_m"
+        android:clickable="true"
         android:text="@string/lbl_my_fans" />
 
     <TextView
@@ -86,6 +90,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_lineframe_bottom_selector"
         android:padding="@dimen/space_m"
+        android:clickable="true"
         android:text="@string/lbl_fav" />
 
     <TextView

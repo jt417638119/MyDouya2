@@ -3,18 +3,28 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+
+    <LinearLayout
         android:layout_centerInParent="true"
-        android:src="@mipmap/ic_launcher"
-        android:id="@+id/ivLanding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_below="@+id/ivLanding"
-        android:gravity="center"
-        android:padding="@dimen/space_m"
-        android:text="@string/app_name"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/tv_m_black_sl"
+            android:id="@+id/tvWelcome"
+            android:gravity="center"
+            android:padding="@dimen/space_m"
+            android:text="欢迎来到"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            style="@style/tv_m_blue_sl"
+            android:gravity="center"
+            android:padding="@dimen/space_m"
+            android:text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.hjt.mydouya.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
@@ -18,6 +19,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.hjt.mydouya.R;
+import com.hjt.mydouya.activities.ArticleCommentActivity;
 import com.hjt.mydouya.activities.CWConstant;
 import com.hjt.mydouya.adapters.HomepageListAdapter;
 import com.hjt.mydouya.entities.HttpResponse;
@@ -53,6 +55,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.ItemDecoration mItemDecoration;
     private List<StatusEntity> mEntityList;
+    private StatusEntity mStatusEntity;
     private HomepageListAdapter mHomepageListAdapter;
     private HomePresenter mPresenter;
 
@@ -155,6 +158,17 @@ public class HomeFragment extends BaseFragment implements HomeView {
             @Override
             public void onItemClick(View v, int position) {
                 LogUtils.e(position+"");
+            }
+        });
+        // 这是自定义的CommentItem监听器，在HomepageListAdapter有匿名内部类
+        mHomepageListAdapter.setOnCommentItemClickListener(new HomepageListAdapter.OnCommentItemClickListener() {
+            @Override
+            public void onCommentItemClick(View v, int position) {
+                mStatusEntity = mEntityList.get(position);
+                long id = mStatusEntity.id;
+                Intent intent = new Intent(getActivity(), ArticleCommentActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
             }
         });
     }

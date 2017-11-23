@@ -96,6 +96,12 @@
             android:src="@mipmap/ic_place_holder"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_divider"
+        android:background="@color/cw_lightgrey"
+        />
+
     <LinearLayout
         android:id="@+id/llBottom"
         android:layout_width="match_parent"
