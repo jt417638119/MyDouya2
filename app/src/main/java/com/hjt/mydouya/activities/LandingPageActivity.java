@@ -6,6 +6,10 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.hjt.mydouya.R;
+import com.hjt.mydouya.entities.UserEntity;
+import com.hjt.mydouya.model.UserModel;
+import com.hjt.mydouya.model.UserModelImpl;
+import com.hjt.mydouya.utils.LogUtils;
 import com.hjt.mydouya.utils.SPUtils;
 import com.sina.weibo.sdk.auth.AuthInfo;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
@@ -21,6 +25,7 @@ public class LandingPageActivity extends BaseActivity {
     private SsoHandler mSsoHandler;
     private AuthInfo mAuthInfo;
     private SPUtils mSPUtils;
+    private UserEntity mUserEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,7 @@ public class LandingPageActivity extends BaseActivity {
         mSPUtils = SPUtils.getIntantce(getApplicationContext());
         mAuthInfo = new AuthInfo(getApplicationContext(), CWConstant.APP_KEY, CWConstant.REDIRECT_URL, CWConstant.SCOPE);
         mSsoHandler = new SsoHandler(this, mAuthInfo);
+        mUserEntity = new UserEntity();
 
         new Handler().postDelayed(new Runnable() { // 半秒钟后执行，检查是否登录
             @Override
@@ -57,7 +63,11 @@ public class LandingPageActivity extends BaseActivity {
                     Log.e("oncreate111", bundle + "");
                     // 将Bundle解析成AccesToken
                     Oauth2AccessToken accessToken = Oauth2AccessToken.parseAccessToken(bundle);
+                    // 保存Token
                     mSPUtils.saveToken(accessToken);
+                    // 保存用户基本信息
+//                    UserModelImpl userModel = new UserModelImpl(getApplicationContext());
+//                    userModel.saveLocalUser();
                     startActivity(new Intent(LandingPageActivity.this, HomePageActivity.class));
                     finish();
                 }

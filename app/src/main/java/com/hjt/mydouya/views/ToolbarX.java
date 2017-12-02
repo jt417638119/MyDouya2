@@ -4,9 +4,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hjt.mydouya.R;
+import com.hjt.mydouya.utils.CircleTransform;
 
 /**
  * Created by HJT on 2017/11/13.
@@ -17,11 +21,15 @@ public class ToolbarX {
     private AppCompatActivity mActivity;
     private ActionBar mActionBar;
     private RelativeLayout rlCustom;
+    private ImageView ivNavigation;
+    private TextView tvCustomTitle;
 
     public ToolbarX(Toolbar toolbar, AppCompatActivity activity) {
         mToolbar = toolbar;
         mActivity = activity;
-        rlCustom = (RelativeLayout) mToolbar.findViewById(R.id.rlCustom);
+//        rlCustom = (RelativeLayout) mToolbar.findViewById(R.id.rlCustom);
+        ivNavigation = (ImageView) mToolbar.findViewById(R.id.ivNavigation);
+        tvCustomTitle = (TextView) mToolbar.findViewById(R.id.tvTitle);
         mActivity.setSupportActionBar(mToolbar);
         mActionBar = mActivity.getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);// 设置左上角有返回标志可见
@@ -45,8 +53,17 @@ public class ToolbarX {
         mActionBar.setTitle(resId);
     }
 
+    public void setCustomTitle(int resId) {
+        tvCustomTitle.setText(resId);
+    }
+
     public void setSubTite(int resId) {
         mActionBar.setSubtitle(resId);
+    }
+
+
+    public void setTitleVisible(Boolean visible) {
+        mActionBar.setDisplayShowTitleEnabled(visible);
     }
 
     // 不同的Activity设置不同的监听
@@ -58,6 +75,20 @@ public class ToolbarX {
     public void setNavigationIcon(int resId) {
         mToolbar.setNavigationIcon(resId);
     }
+
+    public void setNavigationIcon(String profile_image_url) {
+        Glide.with(mActivity).load(profile_image_url).transform(new CircleTransform(mActivity))
+                .into(ivNavigation);
+    }
+
+    public void setNavigationIconOnclickListener(View.OnClickListener listener) {
+        ivNavigation.setOnClickListener(listener);
+    }
+
+    public void setNavigationIconVisible(int visible) {
+        ivNavigation.setVisibility(visible);
+    }
+
 
     // 不同的Activity设置是否呈现
     public void setDisplayHomeAsUpEnabled(Boolean show) {

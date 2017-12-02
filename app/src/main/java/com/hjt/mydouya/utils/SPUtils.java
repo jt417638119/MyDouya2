@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.hjt.mydouya.entities.UserEntity;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
 /**
@@ -18,6 +19,8 @@ public class SPUtils {
     private static final String SP_NAME = "WEIBO";
     private static final String ACCESS_TOKEN = "ACCESS_TOKEN";
     private static final String IS_LOGIN = "IS_LOGIN";
+    private static final String USER = "USER";
+    private static final String UID = "UID";
 
     private SPUtils() {}
 
@@ -39,12 +42,36 @@ public class SPUtils {
         mEditor.putBoolean(IS_LOGIN,true).commit();
     }
 
+    public void saveUser(UserEntity userEntity) {
+        mEditor.putString(USER, new Gson().toJson(userEntity)).commit();
+    }
+
+    public void saveText(String string) {
+        mEditor.putString("TEXT",string).commit();
+    }
+    public String getText() {
+        String json = mSharedPreferences.getString("TEXT","");
+        if (json == null) {
+            return null;
+        }
+        return json;
+    }
+
+
     public Oauth2AccessToken getToken() {
         String json = mSharedPreferences.getString(ACCESS_TOKEN,"");
         if (json == null) {
             return null;
         }
         return new Gson().fromJson(json,Oauth2AccessToken.class);
+    }
+
+    public UserEntity getUser() {
+        String json = mSharedPreferences.getString(USER, "");
+        if (json == null) {
+            return null;
+        }
+        return new Gson().fromJson(json, UserEntity.class);
     }
 
 

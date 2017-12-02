@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.hjt.mydouya.R;
 import com.hjt.mydouya.entities.PicUrlsEntity;
 import com.hjt.mydouya.entities.StatusEntity;
+import com.hjt.mydouya.utils.CircleTransform;
 import com.hjt.mydouya.utils.RichTextUtils;
 import com.hjt.mydouya.utils.TimeFormatUtils;
 
@@ -59,8 +60,9 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
             ); // 内容
             // 要为text中标志的字段添加点击事件
             homepageViewHolder.tvContent.setMovementMethod(LinkMovementMethod.getInstance());
+            // 加载头像
             Glide.with(mContext)
-                    .load(entity.user.profile_image_url)
+                    .load(entity.user.profile_image_url).transform(new CircleTransform(mContext))
                     .into(homepageViewHolder.ivHeader); // 加载头像
             List<PicUrlsEntity> pics = entity.pic_urls; // 提取内容图片
             if (pics != null && pics.size() > 0) {

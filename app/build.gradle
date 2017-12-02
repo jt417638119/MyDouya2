@@ -40,4 +40,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile project(':pullToRefresh')
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
 }

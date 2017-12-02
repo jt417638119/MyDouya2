@@ -8,7 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
-
+        <ImageView
+            android:id="@+id/ivNavigation"
+            android:layout_gravity="left"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            />
     </android.support.v7.widget.Toolbar>
 
 </LinearLayout>

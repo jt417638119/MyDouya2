@@ -57,7 +57,11 @@ public abstract class BaseNetWork {
                 } else if (object.has("comments")) {
                     httpResponse.response = object.get("comments").toString();
                     success = true;
-                } else { // 什么字段都没有
+                } else if (object.has("uid")) {
+                    httpResponse.response = object.get("uid").toString();
+                    success = true;
+                }
+                else { // 什么字段都没有
                     httpResponse.response = s;
                     success = true;
                 }

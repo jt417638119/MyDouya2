@@ -11,5 +11,7 @@ public class CWUrls {
     public static final String STATUS_REPOST = PREFIX + "statuses/repost.json";
     public static final String COMMENT_CREATE = PREFIX + "comments/create.json";
     public static final String COMMENT_SHOW = PREFIX + "comments/show.json";
+    public static final String GET_UID = PREFIX + "account/get_uid.json";
+    public static final String GET_USER = PREFIX + "users/show.json";
 
 }

@@ -16,6 +16,7 @@ import com.hjt.mydouya.R;
 import com.hjt.mydouya.entities.CommentEntity;
 import com.hjt.mydouya.entities.PicUrlsEntity;
 import com.hjt.mydouya.entities.StatusEntity;
+import com.hjt.mydouya.utils.CircleTransform;
 import com.hjt.mydouya.utils.RichTextUtils;
 import com.hjt.mydouya.utils.TimeFormatUtils;
 
@@ -50,7 +51,9 @@ public class ArticleCommentListAdapter extends RecyclerView.Adapter {
                     .created_at));
             articleCommentHodler.tvContent.setText(RichTextUtils.getRichText(mContext,
                     commentEntity.text));
-            Glide.with(mContext).load(commentEntity.user.profile_image_url).into
+            // 设置头像
+            Glide.with(mContext).load(commentEntity.user.profile_image_url).transform(new
+                    CircleTransform(mContext)).into
                     (articleCommentHodler.ivHeader);
         }
     }
