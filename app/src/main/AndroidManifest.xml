@@ -43,6 +43,8 @@
         </activity>
 
         <activity android:name=".activities.ArticleCommentActivity"/>
+        <activity android:name=".activities.WriteArticleActivity"/>
+        <activity android:name=".activities.MyArticleActivity"/>
 
 
 

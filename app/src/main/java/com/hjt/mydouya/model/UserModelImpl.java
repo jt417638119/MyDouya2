@@ -69,7 +69,6 @@ public class UserModelImpl implements UserModel {
                 LogUtils.e("errororororororo" + mUid);
                 SPUtils.getIntantce(mContext).saveText("hahahahah");
                 LogUtils.e("sucessssss" + SPUtils.getIntantce(mContext).getText());
-
             }
         });
         LogUtils.e("sucessssss" + SPUtils.getIntantce(mContext).getText());

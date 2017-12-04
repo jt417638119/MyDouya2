@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.hjt.mydouya.R;
 import com.hjt.mydouya.activities.LandingPageActivity;
+import com.hjt.mydouya.activities.MyArticleActivity;
 import com.hjt.mydouya.utils.CircleTransform;
 import com.hjt.mydouya.utils.LogUtils;
 import com.hjt.mydouya.utils.SPUtils;
@@ -26,6 +27,7 @@ public class ProfileFragment extends BaseFragment {
     private View view;
     private ImageView ivHeader;
     private TextView tvUserName;
+    private TextView tvMyArticle;
     CustomDialog.Builder builder;
     CustomDialog mDialog;
 
@@ -47,6 +49,7 @@ public class ProfileFragment extends BaseFragment {
         ivHeader = (ImageView) view.findViewById(R.id.ivHeader);
         tvUserName = (TextView) view.findViewById(R.id.tvUserName);
         tvLoginOut = (TextView) view.findViewById(R.id.tvLoginOut);
+        tvMyArticle = (TextView) view.findViewById(R.id.tvMyArticle);
 
         // 加载头像
         Glide.with(this).load(SPUtils.getIntantce(getContext()).getUser().profile_image_url)
@@ -54,7 +57,16 @@ public class ProfileFragment extends BaseFragment {
         // 加载名字
         tvUserName.setText(SPUtils.getIntantce(getContext()).getUser().screen_name);
 
+        // 设置我的微博监听
+        tvMyArticle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyArticleActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        // 设置退出登录监听
         tvLoginOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

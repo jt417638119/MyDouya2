@@ -1,5 +1,7 @@
 package com.hjt.mydouya.entities;
 
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**

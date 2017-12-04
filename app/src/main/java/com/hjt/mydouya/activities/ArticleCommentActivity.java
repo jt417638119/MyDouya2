@@ -3,6 +3,7 @@ package com.hjt.mydouya.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,7 +58,13 @@ public class ArticleCommentActivity extends BaseActivity implements ArticleComme
         rlv.setMode(PullToRefreshBase.Mode.BOTH);
         // 加分割线
         rlv.getRefreshableView().addItemDecoration(new DividerItemDecoration(getActivity(),1));
-
+        /**
+         * 设置toolbar
+         */
+        getToolBar().setTitleVisible(false);
+        getToolBar().setCustomTitle(R.string.lbl_others_comment);
+        // 禁止drawerlayout 手势滑动
+        getmDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
 
     @Override

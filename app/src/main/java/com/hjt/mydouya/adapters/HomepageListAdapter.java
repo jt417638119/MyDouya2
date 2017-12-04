@@ -16,6 +16,7 @@ import com.hjt.mydouya.R;
 import com.hjt.mydouya.entities.PicUrlsEntity;
 import com.hjt.mydouya.entities.StatusEntity;
 import com.hjt.mydouya.utils.CircleTransform;
+import com.hjt.mydouya.utils.LogUtils;
 import com.hjt.mydouya.utils.RichTextUtils;
 import com.hjt.mydouya.utils.TimeFormatUtils;
 
@@ -120,6 +121,7 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return mDataSet.size();
+
     }
 
     // 调用匿名内部类

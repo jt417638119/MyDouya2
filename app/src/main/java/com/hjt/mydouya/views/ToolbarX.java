@@ -23,12 +23,14 @@ public class ToolbarX {
     private RelativeLayout rlCustom;
     private ImageView ivNavigation;
     private TextView tvCustomTitle;
+    private ImageView ivWrite;
 
     public ToolbarX(Toolbar toolbar, AppCompatActivity activity) {
         mToolbar = toolbar;
         mActivity = activity;
 //        rlCustom = (RelativeLayout) mToolbar.findViewById(R.id.rlCustom);
         ivNavigation = (ImageView) mToolbar.findViewById(R.id.ivNavigation);
+        ivWrite = (ImageView) mToolbar.findViewById(R.id.ivWrite);
         tvCustomTitle = (TextView) mToolbar.findViewById(R.id.tvTitle);
         mActivity.setSupportActionBar(mToolbar);
         mActionBar = mActivity.getSupportActionBar();
@@ -81,10 +83,33 @@ public class ToolbarX {
                 .into(ivNavigation);
     }
 
+    // 设置toolbar右侧图标的显示
+    public void setToolbarRightIcon(int resId) {
+        if (ivWrite == null) {
+            ivWrite = (ImageView) mToolbar.findViewById(R.id.ivWrite);
+        }
+        ivWrite.setImageResource(resId);
+    }
+
+    // 设置toolbar右侧图标的的监听
+    public void setToolbarRightIconOnClickListener(View.OnClickListener listener) {
+        if (ivWrite == null) {
+            ivWrite = (ImageView) mToolbar.findViewById(R.id.ivWrite);
+        }
+        ivWrite.setOnClickListener(listener);
+    }
+
+    // 设置toolbar右侧图标的的是否可见
+    public void setToolbarRightIconVisible(int visible) {
+        ivWrite.setVisibility(visible);
+    }
+
+
     public void setNavigationIconOnclickListener(View.OnClickListener listener) {
         ivNavigation.setOnClickListener(listener);
     }
 
+    // 设置toolbar左侧图标的的是否可见
     public void setNavigationIconVisible(int visible) {
         ivNavigation.setVisibility(visible);
     }

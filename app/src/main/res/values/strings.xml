@@ -16,6 +16,7 @@
     <string name="recommend">推荐</string>
     <string name="newest">最新</string>
     <string name="lbl_home">首页</string>
+    <string name="lbl_write_article">发微博</string>
     <string name="lbl_message">信息</string>
     <string name="lbl_profile">我的</string>
     <string name="lbl_landing">菜鸟窝</string>
@@ -24,6 +25,7 @@
     <string name="lbl_post">发送</string>
     <string name="lbl_repost">转发微博</string>
     <string name="lbl_comment">评论微博</string>
+    <string name="lbl_others_comment">评论</string>
     <string name="at_me">\@我的</string>
     <string name="lbl_subscription">订阅信息</string>
     <string name="lbl_like">赞</string>

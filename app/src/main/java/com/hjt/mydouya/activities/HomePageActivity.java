@@ -1,5 +1,6 @@
 package com.hjt.mydouya.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -98,6 +99,7 @@ public class HomePageActivity extends BaseActivity implements HomePageView {
                         menu_id = -1;
 //                        getToolBar().setTitle(R.string.lbl_home);
                         getToolBar().setNavigationIconVisible(View.VISIBLE);
+                        getToolBar().setToolbarRightIconVisible(View.VISIBLE);
                         getToolBar().setCustomTitle(R.string.lbl_home);
                         break;
                     case R.id.rbMessage:
@@ -105,6 +107,7 @@ public class HomePageActivity extends BaseActivity implements HomePageView {
                         tabHost.setCurrentTab(1);
 //                        getToolBar().setTitle(R.string.lbl_message);
                         getToolBar().setNavigationIconVisible(View.VISIBLE);
+                        getToolBar().setToolbarRightIconVisible(View.VISIBLE);
                         getToolBar().setCustomTitle(R.string.lbl_message);
                         break;
                     case R.id.rbProfile:
@@ -112,6 +115,7 @@ public class HomePageActivity extends BaseActivity implements HomePageView {
                         tabHost.setCurrentTab(2);
                         getToolBar().setCustomTitle(R.string.lbl_profile);
                         getToolBar().setNavigationIconVisible(View.GONE);
+                        getToolBar().setToolbarRightIconVisible(View.GONE);
                         break;
                 }
                 supportInvalidateOptionsMenu(); // 重新加载onCreateOptionsMenu
@@ -125,6 +129,15 @@ public class HomePageActivity extends BaseActivity implements HomePageView {
         // 设置Title不可见
         getToolBar().setTitleVisible(false);
         getToolBar().setCustomTitle(R.string.lbl_home);
+        getToolBar().setToolbarRightIcon(R.mipmap.ic_toolbar_write);
+        // 设置图标跳转至写微博
+        getToolBar().setToolbarRightIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomePageActivity.this, WriteArticleActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // 缓存中已经没有本地的User
         if (SPUtils.getIntantce(getApplicationContext()).getUser() == null) {

@@ -44,6 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ivHeader = (ImageView) findViewById(R.id.ivHeader);
         tvUserName = (TextView) findViewById(R.id.tvUserName);
 
+
         //IOC：控制反转，在父类中调用子类的实现
         View view = getLayoutInflater().inflate(getLayoutId(), rlContent, false);//
         // 将layout填充到rlContent
