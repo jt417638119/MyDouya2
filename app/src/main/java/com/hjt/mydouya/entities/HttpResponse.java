@@ -5,6 +5,7 @@ package com.hjt.mydouya.entities;
  */
 
 public class HttpResponse {
+    public String request;
     public String message;
     public int code;
     public String response;

@@ -1,7 +1,9 @@
 package com.hjt.mydouya.networks;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -12,14 +14,20 @@ import com.sina.weibo.sdk.net.AsyncWeiboRunner;
 import com.sina.weibo.sdk.net.RequestListener;
 import com.sina.weibo.sdk.net.WeiboParameters;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -28,8 +36,10 @@ import okhttp3.Response;
 
 public abstract class OkhttpBaseNetWork {
     private static final OkHttpClient mOkHttpClient = new OkHttpClient();
+    private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json;");
     private Request mRequest;
     private String mUrl;
+    private RequestBody formBody;
 
     public OkhttpBaseNetWork() {
 
@@ -37,6 +47,11 @@ public abstract class OkhttpBaseNetWork {
 
     public OkhttpBaseNetWork setGetRequest() {
         mRequest = new Request.Builder().url(mUrl).build();
+        return this;
+    }
+
+    public OkhttpBaseNetWork setPostRequest() {
+        mRequest = new Request.Builder().url(mUrl).post(formBody).build();
         return this;
     }
 
@@ -57,17 +72,19 @@ public abstract class OkhttpBaseNetWork {
 
                 if (jsonElement.isJsonObject()) {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
-                    // 错误信息的处理
-                    if (jsonObject.has("error_code")) {
+                    if (jsonObject.has("error_code")) {// 错误信息的处理
+                        httpResponse.request = jsonObject.get("request").getAsString();
                         httpResponse.code = jsonObject.get("error_code").getAsInt();
-                    }
-                    if (jsonObject.has("error")) {
                         httpResponse.message = jsonObject.get("error").getAsString();
-                    }else
-                    // 正确信息的处理
-                    if (jsonObject.has("statuses")) {
+                    }
+                    else if (jsonObject.has("statuses")) { // 正确信息的处理
                         httpResponse.response = jsonObject.get("statuses").toString();
                         LogUtils.e("statuses" + httpResponse.response);
+                        success = true;
+                    }else { // 什么字段都没有
+                        String string =  response.body().string();
+                        LogUtils.e("sadasda" + resString);
+                        httpResponse.response = resString;
                         success = true;
                     }
                 }
@@ -104,10 +121,39 @@ public abstract class OkhttpBaseNetWork {
         }
 
         this.mUrl = url + stringBuffer.toString();
-        LogUtils.e("urlllllllllll" + mUrl);
+        return this;
+    }
+    /**
+     * 为HttpPost的url添加多个参数
+     */
+    public OkhttpBaseNetWork setHttpPostParams(String url,LinkedHashMap<String,String> params) {
+        FormBody.Builder builder = new FormBody.Builder();
+        for (String key : params.keySet()) {
+            LogUtils.e("key ===" + key + "  values=====  " + params.get(key));
+            builder.add(key, params.get(key));
+        }
+        formBody = builder.build();
+        this.mUrl = url;
+        return this;
+    }
+
+    public OkhttpBaseNetWork setHttpPostJsonParams(String url,LinkedHashMap<String,String> params) {
+        StringBuffer tempParams = new StringBuffer();
+        JSONObject jsonObject = new JSONObject();
+        for (String key : params.keySet()) {
+            try {
+                jsonObject.put(key,params.get(key));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        LogUtils.e(jsonObject.toString());
+        formBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString());
+        mUrl = url;
         return this;
     }
 
 
-    public abstract void onFinish(HttpResponse httpResponse, boolean success);
+        public abstract void onFinish(HttpResponse httpResponse, boolean success);
 }
