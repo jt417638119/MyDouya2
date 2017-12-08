@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface WriteView extends BaseView {
-    void onSuccess(List<StatusEntity> list);
+    void onSuccess();
 }

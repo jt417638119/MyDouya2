@@ -31,7 +31,7 @@ public class WriteArticleActivity extends BaseActivity implements WriteView {
         super.onCreate(savedInstanceState);
 
         etWriteConent = (EditText) findViewById(R.id.etWriteContent);
-        mWritePresenter = new WritePresenterImpl(getApplicationContext());
+        mWritePresenter = new WritePresenterImpl(getApplicationContext(),this,getActivity());
         builder = new CustomDialog.Builder(getActivity());
         etWriteConent.setHint("分享微博....");
         init();
@@ -76,12 +76,15 @@ public class WriteArticleActivity extends BaseActivity implements WriteView {
 
     @Override
     public void onError(String error) {
-
+        Toast.makeText(getActivity(),"发送微博失败",Toast.LENGTH_SHORT).show();
+        mDialog.dismiss();
+        finish();
     }
 
     @Override
-    public void onSuccess(List<StatusEntity> list) {
+    public void onSuccess() {
         Toast.makeText(getActivity(),"发送微博成功！",Toast.LENGTH_SHORT).show();
+        mDialog.dismiss();
         finish();
     }
 

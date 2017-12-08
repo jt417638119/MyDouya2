@@ -1,5 +1,6 @@
 package com.hjt.mydouya.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -11,6 +12,7 @@ import com.hjt.mydouya.networks.OkhttpBaseNetWork;
 import com.hjt.mydouya.networks.ParameterKeySet;
 import com.hjt.mydouya.utils.LogUtils;
 import com.hjt.mydouya.utils.SPUtils;
+import com.hjt.mydouya.views.mvpviews.WriteView;
 import com.sina.weibo.sdk.constant.WBConstants;
 
 import java.io.IOException;
@@ -28,10 +30,14 @@ import okhttp3.Response;
  */
 
 public class WritePresenterImpl implements WritePresenter{
+    private WriteView mWriteView;
+    private Activity mActivity;
     private Context mContext;
     private String s;
 
-    public WritePresenterImpl(Context context) {
+    public WritePresenterImpl(Context context, WriteView writeView, Activity activity) {
+        this.mActivity = activity;
+        this.mWriteView = writeView;
         this.mContext = context;
     }
 
@@ -57,8 +63,21 @@ public class WritePresenterImpl implements WritePresenter{
             public void onFinish(HttpResponse httpResponse, boolean success) {
                 if (success) {
                     LogUtils.e("write +++++ " + httpResponse.response);
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mWriteView.onSuccess();
+                        }
+                    });
+
                 }else {
                     LogUtils.e("write error" + httpResponse.message + httpResponse.code + "  url  " + httpResponse.request);
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mWriteView.onError("error");
+                        }
+                    });
                 }
             }
         }.setHttpPostParams(CWUrls.SHARE,params).setPostRequest().doEqueue();
