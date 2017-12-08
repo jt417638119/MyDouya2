@@ -28,6 +28,5 @@ public class HomePageActivityPresenterImpl implements HomePageActivityPresenter{
     public void saveLocalUser() {
         // 先保存当地User并且显示更新UI
         mUserModel.saveLocalUser(mHandler);
-
     }
 }

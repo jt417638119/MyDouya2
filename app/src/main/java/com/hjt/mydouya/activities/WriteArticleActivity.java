@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hjt.mydouya.R;
 import com.hjt.mydouya.entities.StatusEntity;
@@ -80,7 +81,8 @@ public class WriteArticleActivity extends BaseActivity implements WriteView {
 
     @Override
     public void onSuccess(List<StatusEntity> list) {
-
+        Toast.makeText(getActivity(),"发送微博成功！",Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     // 设置dialog取消按钮的监听

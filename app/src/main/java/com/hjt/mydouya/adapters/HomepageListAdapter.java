@@ -1,6 +1,7 @@
 package com.hjt.mydouya.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hjt.mydouya.R;
+import com.hjt.mydouya.activities.PhotoViewActivity;
 import com.hjt.mydouya.entities.PicUrlsEntity;
 import com.hjt.mydouya.entities.StatusEntity;
 import com.hjt.mydouya.utils.CircleTransform;
@@ -69,12 +71,20 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
             if (pics != null && pics.size() > 0) {
                 // 因为是ViewHodler，可能会重复利用，则需要重新设置
                 homepageViewHolder.ivContent.setVisibility(View.VISIBLE);
-                PicUrlsEntity pic = pics.get(0);
+                final PicUrlsEntity pic = pics.get(0);
                 pic.original_pic = pic.thumbnail_pic.replace("thumbnail", "large");
                 pic.bmiddle_pic = pic.thumbnail_pic.replace("thumbnail", "bmiddle");
                 Glide.with(mContext)
                         .load(pic.bmiddle_pic)
                         .into(homepageViewHolder.ivContent);
+                homepageViewHolder.ivContent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoViewActivity.class);
+                        intent.putExtra(PicUrlsEntity.class.getSimpleName(), pic);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {// 将图片框设置成不可见
                 homepageViewHolder.ivContent.setVisibility(View.GONE);
             }
@@ -96,12 +106,20 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
                 if (rePics != null && rePics.size() > 0) {
                     // 因为是ViewHodler，可能会重复利用，则需要重新设置
                     homepageViewHolder.ivReContent.setVisibility(View.VISIBLE);
-                    PicUrlsEntity pic = rePics.get(0);
+                    final PicUrlsEntity pic = rePics.get(0);
                     pic.original_pic = pic.thumbnail_pic.replace("thumbnail", "large");
                     pic.bmiddle_pic = pic.thumbnail_pic.replace("thumbnail", "bmiddle");
                     Glide.with(mContext)
                             .load(pic.bmiddle_pic)
                             .into(homepageViewHolder.ivReContent);
+                    homepageViewHolder.ivReContent.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, PhotoViewActivity.class);
+                            intent.putExtra(PicUrlsEntity.class.getSimpleName(), pic);
+                            mContext.startActivity(intent);
+                        }
+                    });
                 } else {// 将图片框设置成不可见
                     homepageViewHolder.ivReContent.setVisibility(View.GONE);
                 }

@@ -84,15 +84,6 @@ public class MyArticlePresenterImpl implements MyArticlePresenter{
                     }
 
                     mList.addAll(mDataSet);
-//                    ArrayList list = new ArrayList();
-//                    list.add(mList);
-//                    Message message = new Message();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putParcelableArrayList("mDataSet",list);
-//                    message.setData(bundle);
-//                    message.what = UPDATE_RECECLE;
-//                    mHandler.sendMessage(message);
-                    LogUtils.e("onFinish" + httpResponse.response);
                     mActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -101,7 +92,6 @@ public class MyArticlePresenterImpl implements MyArticlePresenter{
                     });
                 }else  {
                     LogUtils.e("error" + httpResponse.message);
-//                    mMyArticleActivityView.onError(httpResponse.message);
                     mActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
