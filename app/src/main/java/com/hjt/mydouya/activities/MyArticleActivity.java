@@ -58,6 +58,18 @@ public class MyArticleActivity extends BaseActivity implements MyArticleActivity
         rlv.setMode(PullToRefreshBase.Mode.BOTH);
         // 添加分割线
         rlv.getRefreshableView().addItemDecoration(new DividerItemDecoration(getActivity(),1));
+        rlv.setMode(PullToRefreshBase.Mode.BOTH);
+        rlv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<RecyclerView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                mMyArticlePresenter.loadData();
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
+                mMyArticlePresenter.loadMore();
+            }
+        });
         /**
          * 设置toolbar
          */

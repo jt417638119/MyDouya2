@@ -14,6 +14,7 @@ public class CWUrls {
     public static final String GET_UID = PREFIX + "account/get_uid.json";
     public static final String GET_USER = PREFIX + "users/show.json";
     public static final String SHARE = PREFIX + "statuses/share.json";
+    public static final String COMMENT_BY_ME = PREFIX + "comments/by_me.json";
 
 
 }

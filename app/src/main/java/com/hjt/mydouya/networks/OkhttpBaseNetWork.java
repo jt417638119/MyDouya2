@@ -81,7 +81,11 @@ public abstract class OkhttpBaseNetWork {
                         httpResponse.response = jsonObject.get("statuses").toString();
                         LogUtils.e("statuses" + httpResponse.response);
                         success = true;
-                    }else { // 什么字段都没有
+                    }else if (jsonObject.has("comments")) {
+                        httpResponse.response = jsonObject.get("comments").toString();
+                        LogUtils.e("my comments" + httpResponse.response);
+                        success = true;
+                    } else { // 什么字段都没有，有一种情况是写微博后返回的数据
                         String string =  response.body().string();
                         LogUtils.e("sadasda" + resString);
                         httpResponse.response = resString;
