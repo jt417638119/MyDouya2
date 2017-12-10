@@ -19,6 +19,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.hjt.mydouya.R;
+import com.hjt.mydouya.activities.ArticleActivity;
 import com.hjt.mydouya.activities.ArticleCommentActivity;
 import com.hjt.mydouya.activities.CWConstant;
 import com.hjt.mydouya.adapters.HomepageListAdapter;
@@ -157,7 +158,11 @@ public class HomeFragment extends BaseFragment implements HomeView {
         mHomepageListAdapter.setOnItemClickListener(new HomepageListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                LogUtils.e(position+"");
+                LogUtils.e("The itemView position which you just touched is " + position + "");
+                // 跳转至文字本文
+                Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                intent.putExtra(StatusEntity.class.getSimpleName(), mEntityList.get(position));
+                getActivity().startActivity(intent);
             }
         });
         // 这是自定义的CommentItem监听器，在HomepageListAdapter有匿名内部类

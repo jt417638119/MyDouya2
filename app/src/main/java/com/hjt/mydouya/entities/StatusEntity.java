@@ -2,13 +2,14 @@ package com.hjt.mydouya.entities;
 
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by HJT on 2017/11/15.
  */
 
-public class StatusEntity {
+public class StatusEntity implements Serializable{
 
     public String created_at;
     public long id;

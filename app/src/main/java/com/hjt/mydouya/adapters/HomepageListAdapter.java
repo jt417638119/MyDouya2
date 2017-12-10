@@ -62,7 +62,7 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
             homepageViewHolder.tvContent.setText(RichTextUtils.getRichText(mContext, entity.text)
             ); // 内容
             // 要为text中标志的字段添加点击事件
-            homepageViewHolder.tvContent.setMovementMethod(LinkMovementMethod.getInstance());
+//            homepageViewHolder.tvContent.setMovementMethod(LinkMovementMethod.getInstance());
             // 加载头像
             Glide.with(mContext)
                     .load(entity.user.profile_image_url).transform(new CircleTransform(mContext))
