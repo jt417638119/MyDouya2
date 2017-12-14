@@ -65,12 +65,13 @@ public class HomeFragment extends BaseFragment implements HomeView {
         super.onCreate(savedInstanceState);
         mSPUtils = SPUtils.getIntantce(getActivity().getApplicationContext());
         mEntityList = new ArrayList<StatusEntity>();
-        mHomepageListAdapter = new HomepageListAdapter(mEntityList,getActivity());
+        mHomepageListAdapter = new HomepageListAdapter(mEntityList, getActivity());
         mPresenter = new HomePresenterImp(this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+            Bundle savedInstanceState) {
 //        View view = inflater.inflate(R.layout.fg_home,container,false);
         /*mAsyncWeiboRunner.requestAsync(url, mWeiboParameters, httpMethod, new RequestListener() {
             @Override
@@ -98,7 +99,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
             @Override
             public WeiboParameters onPrepare() {
                 mWeiboParameters = new WeiboParameters(CWConstant.APP_KEY);
-                mWeiboParameters.put(WBConstants.AUTH_ACCESS_TOKEN, mSPUtils.getToken().getToken());// 第二次getToken是get Oauth2AccessToken里的mAccesToken
+                mWeiboParameters.put(WBConstants.AUTH_ACCESS_TOKEN, mSPUtils.getToken().getToken
+                ());// 第二次getToken是get Oauth2AccessToken里的mAccesToken
                 return mWeiboParameters;
             }
 
@@ -127,12 +129,14 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
         }.get();*/
         // 初始化RecyclerView
-        rlv = (PullToRefreshRecyclerView) inflater.inflate(R.layout.v_common_recycleview, container, false);
+        rlv = (PullToRefreshRecyclerView) inflater.inflate(R.layout.v_common_recycleview,
+                container, false);
         init();
         // 第一次加载
         mPresenter.loadData();
         return rlv;
     }
+
     // 初始化RecyclerView
     private void init() {
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -166,7 +170,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
             }
         });
         // 这是自定义的CommentItem监听器，在HomepageListAdapter有匿名内部类
-        mHomepageListAdapter.setOnCommentItemClickListener(new HomepageListAdapter.OnCommentItemClickListener() {
+        mHomepageListAdapter.setOnCommentItemClickListener(new HomepageListAdapter
+                .OnCommentItemClickListener() {
             @Override
             public void onCommentItemClick(View v, int position) {
                 mStatusEntity = mEntityList.get(position);
@@ -176,12 +181,31 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 startActivity(intent);
             }
         });
+        // 这是自定义的RepostItem（转发）监听器，在HomepageListAdapter有匿名内部类
+        mHomepageListAdapter.setOnRetweetItemClickListener(new HomepageListAdapter
+                .OnRetweetItemClickListener() {
+            @Override
+            public void onRetweetItemClick(View v, int position) {
+                Toast.makeText(getActivity(), getResources().getText(R.string.lbl_uncomolete),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        // 这是自定义的LikeItem（转发）监听器，在HomepageListAdapter有匿名内部类
+        mHomepageListAdapter.setOnLikeItemClickListener(new HomepageListAdapter
+                .OnLikeItemClickListener() {
+            @Override
+            public void onLikeItemClick(View v, int position) {
+                Toast.makeText(getActivity(), getResources().getText(R.string.lbl_uncomolete),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
     public void onError(String error) {
         rlv.onRefreshComplete();
-        Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -35,8 +35,8 @@
                 android:text="@string/empty_string" />
 
             <TextView
-                android:id="@+id/tvAuth"
-                style="@style/tv_m_black_sl"
+                android:id="@+id/tvDescription"
+                style="@style/tv_m_grey_sl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/space_s"

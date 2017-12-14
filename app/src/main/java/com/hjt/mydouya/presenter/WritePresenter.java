@@ -6,4 +6,5 @@ package com.hjt.mydouya.presenter;
 
 public interface WritePresenter {
     public void writeArticle(String content);
+    public void writeComment(String content,long id);
 }

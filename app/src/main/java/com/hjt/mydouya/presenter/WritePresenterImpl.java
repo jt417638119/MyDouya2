@@ -44,6 +44,7 @@ public class WritePresenterImpl implements WritePresenter{
     @Override
     public void writeArticle(String content) {
         String mContent = null; // 需加安全域名才能发送
+        content = URLEncoder.encode(content);
 //        try {
 //            mContent = URLEncoder.encode(content + CWConstant.SECURITY_URL,"utf-8");
 //            LogUtils.e("content ==" + mContent);
@@ -83,5 +84,40 @@ public class WritePresenterImpl implements WritePresenter{
         }.setHttpPostParams(CWUrls.SHARE,params).setPostRequest().doEqueue();
     }
 
+    @Override
+    public void writeComment(String content,long id) {
+        String mContent = null; // 评论内容
+        content = URLEncoder.encode(content);
+        mContent= content;
+
+        LinkedHashMap<String, String> params = new LinkedHashMap<String,String>();
+        params.put(ParameterKeySet.AUTH_ACCESS_TOKEN, SPUtils.getIntantce(mContext).getToken().getToken());
+        params.put(ParameterKeySet.ID,String.valueOf(id)); // 需要评论的微博ID
+        params.put(ParameterKeySet.COMMNET, mContent);
+
+        new OkhttpBaseNetWork() { // 需要传递json的参数
+            @Override
+            public void onFinish(HttpResponse httpResponse, boolean success) {
+                if (success) {
+                    LogUtils.e("write comment +++++ " + httpResponse.response);
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mWriteView.onSuccess();
+                        }
+                    });
+
+                }else {
+                    LogUtils.e("write comment error" + httpResponse.message + httpResponse.code + "  url  " + httpResponse.request);
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mWriteView.onError("error");
+                        }
+                    });
+                }
+            }
+        }.setHttpPostParams(CWUrls.COMMENT_CREATE,params).setPostRequest().doEqueue();
+    }
 
 }

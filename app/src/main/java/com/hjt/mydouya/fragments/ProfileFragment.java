@@ -27,6 +27,7 @@ public class ProfileFragment extends BaseFragment {
     private View view;
     private ImageView ivHeader;
     private TextView tvUserName;
+    private TextView tvDescription;
     private TextView tvMyArticle;
     CustomDialog.Builder builder;
     CustomDialog mDialog;
@@ -50,12 +51,16 @@ public class ProfileFragment extends BaseFragment {
         tvUserName = (TextView) view.findViewById(R.id.tvUserName);
         tvLoginOut = (TextView) view.findViewById(R.id.tvLoginOut);
         tvMyArticle = (TextView) view.findViewById(R.id.tvMyArticle);
+        tvDescription = (TextView) view.findViewById(R.id.tvDescription);
 
         // 加载头像
         Glide.with(this).load(SPUtils.getIntantce(getContext()).getUser().profile_image_url)
                 .transform(new CircleTransform(getContext())).into(ivHeader);
         // 加载名字
         tvUserName.setText(SPUtils.getIntantce(getContext()).getUser().screen_name);
+
+        // 加载简介
+        tvDescription.setText("简介：" + SPUtils.getIntantce(getContext()).getUser().description);
 
         // 设置我的微博监听
         tvMyArticle.setOnClickListener(new View.OnClickListener() {

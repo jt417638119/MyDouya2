@@ -33,6 +33,9 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
     private List<StatusEntity> mDataSet;
     private OnItemClickListener mOnItemClickListener;
     private OnCommentItemClickListener mOnCommentItemClickListener;
+    private OnRetweetItemClickListener mOnRetweetItemClickListener;
+    private OnLikeItemClickListener mOnLikeItemClickListener;
+
     private Context mContext;
 
     public HomepageListAdapter(List<StatusEntity> mDataSet, Context context) {
@@ -142,14 +145,25 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
 
     }
 
-    // 调用匿名内部类
+    // 调用View匿名内部类
     public void setOnItemClickListener(OnItemClickListener listener) {
         mOnItemClickListener = listener;
     }
-    // 调用匿名内部类
+    // 调用comment匿名内部类
     public void setOnCommentItemClickListener(OnCommentItemClickListener listener) {
         mOnCommentItemClickListener = listener;
     }
+
+    // 调用retweet/repost匿名内部类
+    public void setOnRetweetItemClickListener(OnRetweetItemClickListener listener) {
+        mOnRetweetItemClickListener = listener;
+    }
+
+    // 调用like匿名内部类
+    public void setOnLikeItemClickListener(OnLikeItemClickListener listener) {
+        mOnLikeItemClickListener = listener;
+    }
+
 
     class HomepageViewHolder extends RecyclerView.ViewHolder {
         public ImageView ivHeader;
@@ -178,6 +192,7 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
+            // 评论控件监听
             tvComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -187,6 +202,29 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
+            // 转发控件监听
+            tvRetweet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnRetweetItemClickListener != null ) {
+                        // 调用自定义的监听方法，不然就固定死了
+                        mOnRetweetItemClickListener.onRetweetItemClick(v,getLayoutPosition());
+                    }
+                }
+            });
+            // 点赞控件监听
+            tvLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnLikeItemClickListener != null ) {
+                        // 调用自定义的监听方法，不然就固定死了
+                        mOnLikeItemClickListener.onLikeItemClick(v,getLayoutPosition());
+                    }
+                }
+            });
+
+
+
         }
 
         public void initialize(View itemView) {
@@ -213,6 +251,16 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
     // 匿名内部类，供对象去实现，最后给父类调用
     public interface OnCommentItemClickListener {
         void onCommentItemClick(View v, int position);
+    }
+
+    // 匿名内部类，供对象去实现，最后给父类调用
+    public interface OnRetweetItemClickListener {
+        void onRetweetItemClick(View v, int position);
+    }
+
+    // 匿名内部类，供对象去实现，最后给父类调用
+    public interface OnLikeItemClickListener {
+        void onLikeItemClick(View v, int position);
     }
 
 

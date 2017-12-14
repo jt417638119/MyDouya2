@@ -17,6 +17,7 @@
     <string name="newest">最新</string>
     <string name="lbl_home">首页</string>
     <string name="lbl_write_article">发微博</string>
+    <string name="lbl_write_comment">发评论</string>
     <string name="lbl_article">微博正文</string>
     <string name="lbl_message">信息</string>
     <string name="lbl_profile">我的</string>
@@ -40,6 +41,7 @@
     <string name="lbl_fav">我的收藏</string>
     <string name="lbl_logout">退出登录</string>
     <string name="title_weibo_detail">微博正文</string>
+    <string name="lbl_uncomolete">功能未完善，敬请期待！</string>
     <string name="hello">hello</string>
 
 </resources>

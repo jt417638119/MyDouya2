@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -58,6 +59,9 @@ public class ArticleActivity extends BaseActivity implements ArticleCommentView 
     private List<CommentEntity> mDataSet;
     private ArticleCommentPresenter mArticleCommentPresenter;
     private PullToRefreshScrollView mRlvArticle;
+    private TextView tvRepost;
+    private TextView tvComment;
+    private TextView tvLike;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,9 @@ public class ArticleActivity extends BaseActivity implements ArticleCommentView 
         tvContent = (TextView) findViewById(R.id.tvContent);
         tvReContent = (TextView) findViewById(R.id.tvReContent);
         tvCommentsCount = (TextView) findViewById(R.id.tvCommentsCount);
+        tvRepost = (TextView) findViewById(R.id.tvRepost);
+        tvComment = (TextView) findViewById(R.id.tvComment);
+        tvLike = (TextView) findViewById(R.id.tvLike);
         llRe = (LinearLayout) findViewById(R.id.llRe);
         llNoComments = (LinearLayout) findViewById(R.id.llNoComments);
         rlvComments = (RecyclerView) findViewById(R.id.rlvComments);
@@ -174,6 +181,7 @@ public class ArticleActivity extends BaseActivity implements ArticleCommentView 
             llRe.setVisibility(View.GONE);
         }
 
+        // 设置评论数
         tvCommentsCount.setText(String.valueOf(mStatusEntity.comments_count));
 
         if (mStatusEntity.comments_count != 0) { // 评论数不为0
@@ -202,6 +210,33 @@ public class ArticleActivity extends BaseActivity implements ArticleCommentView 
             // 评论列表隐藏
             rlvComments.setVisibility(View.GONE);
         }
+
+        // 设置转发控件监听
+        tvRepost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),R.string.lbl_uncomolete,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 设置评论控件监听
+        tvComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 跳转至写评论页面
+                Intent intent = new Intent(getActivity(), WriteArticleCommentActivity.class);
+                intent.putExtra("id", mStatusEntity.id);
+                startActivity(intent);
+            }
+        });
+
+        // 设置点赞控件的监听
+        tvLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),R.string.lbl_uncomolete,Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }

@@ -97,6 +97,13 @@
         </RelativeLayout>
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/height_divider"-->
+        <!--android:background="@color/cw_bg"-->
+        <!--android:layout_above="@id/llBottom"-->
+        <!--/>-->
+
     <!-- bottom toolbar -->
     <LinearLayout
         android:id="@+id/llBottom"

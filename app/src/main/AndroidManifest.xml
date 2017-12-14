@@ -48,6 +48,7 @@
         <activity android:name=".activities.PhotoViewActivity"/>
         <activity android:name=".activities.MyAllCommentsAcitivity"/>
         <activity android:name=".activities.ArticleActivity"/>
+        <activity android:name=".activities.WriteArticleCommentActivity"/>
 
 
 

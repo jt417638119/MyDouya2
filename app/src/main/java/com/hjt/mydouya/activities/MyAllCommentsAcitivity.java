@@ -2,16 +2,19 @@ package com.hjt.mydouya.activities;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.hjt.mydouya.R;
 import com.hjt.mydouya.adapters.MyAllCommentListAdapter;
 import com.hjt.mydouya.entities.CommentEntity;
+import com.hjt.mydouya.entities.StatusEntity;
 import com.hjt.mydouya.presenter.AllCommentsPresenter;
 import com.hjt.mydouya.presenter.AllCommentsPresenterImpl;
 import com.hjt.mydouya.utils.LogUtils;
@@ -31,7 +34,7 @@ public class MyAllCommentsAcitivity extends BaseActivity implements MyAllComment
     private MyAllCommentListAdapter mAdapter;
     private List<CommentEntity> mDataSet;
     private AllCommentsPresenter mAllCommentsPresenter;
-
+    private CommentEntity mCommentEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,18 @@ public class MyAllCommentsAcitivity extends BaseActivity implements MyAllComment
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<RecyclerView> refreshView) {
                 mAllCommentsPresenter.loadMore();
+            }
+        });
+        // 设置view 的监听
+        mAdapter.setOnItemClickListener(new MyAllCommentListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                mCommentEntity = mDataSet.get(position);
+                Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                LogUtils.e("comment count ++++++" + mCommentEntity.status.comments_count);
+                LogUtils.e("repost count ++++++" + mCommentEntity.status.reposts_count);
+                intent.putExtra(StatusEntity.class.getSimpleName(),mCommentEntity.status);
+                startActivity(intent);
             }
         });
 

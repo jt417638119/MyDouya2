@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/llUserComment"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:background="@color/cw_white"
+              android:background="@drawable/bg_layout_selector"
+              android:clickable="true"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cw_white"
         android:orientation="horizontal"
         android:padding="@dimen/space_s">
 
@@ -61,7 +62,6 @@
         style="@style/tv_m_black_sl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cw_white"
         android:paddingBottom="@dimen/space_s"
         android:paddingLeft="@dimen/space_s"
         android:paddingTop="@dimen/space_s"
@@ -102,8 +102,7 @@
                 android:layout_height="wrap_content"
                 style="@style/tv_m_grey_sl"
                 android:text="@string/empty_string"
-                android:maxLines="2"
-                android:singleLine="false"
+                android:maxEms="20"
                 android:ellipsize="end"
                 />
 

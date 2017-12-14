@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +26,7 @@ import java.util.List;
 public class MyAllCommentListAdapter extends RecyclerView.Adapter {
     private List<CommentEntity> mMyAllCommentsList;
     private Context mContext;
+    private OnItemClickListener mOnItemClickListener;
 
     public MyAllCommentListAdapter(Context context, List<CommentEntity> list) {
         this.mContext = context;
@@ -89,6 +91,11 @@ public class MyAllCommentListAdapter extends RecyclerView.Adapter {
         return mMyAllCommentsList.size();
     }
 
+    // 设置view的监听，IOC方法，内置父类，让外部去实现
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
+    }
+
     public class MyAllCommentsPageHodler extends RecyclerView.ViewHolder {
         private ImageView ivHeader;
         private TextView tvUserName;
@@ -110,6 +117,24 @@ public class MyAllCommentListAdapter extends RecyclerView.Adapter {
             tvContent = (TextView) itemView.findViewById(R.id.tvContent);
             tvCommentUsername = (TextView) itemView.findViewById(R.id.tvCommentUsername);
             tvCommentContent = (TextView) itemView.findViewById(R.id.tvCommentContent);
+            init(itemView);
         }
+
+        private void init(View itemView) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onItemClick(v,getLayoutPosition());
+                    }
+                }
+            });
+        }
+
     }
+    // 匿名内部类，供对象去实现，最后给父类调用
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
+
 }

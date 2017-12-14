@@ -2,6 +2,7 @@ package com.hjt.mydouya.activities;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +10,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.hjt.mydouya.R;
@@ -30,6 +33,7 @@ import java.util.List;
 public class MyArticleActivity extends BaseActivity implements MyArticleActivityView{
     private static final int UPDATE_RECECLE = 1;
     private PullToRefreshRecyclerView rlv;
+    private StatusEntity mStatusEntity;
     private RecyclerView.LayoutManager mLayoutManager;
     private HomepageListAdapter mAdapter;
     private List<StatusEntity> mDataset;
@@ -70,6 +74,50 @@ public class MyArticleActivity extends BaseActivity implements MyArticleActivity
                 mMyArticlePresenter.loadMore();
             }
         });
+
+        // 这是自定义的Item监听器，在HomepageListAdapter有匿名内部类
+        mAdapter.setOnItemClickListener(new HomepageListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                LogUtils.e("The itemView position which you just touched is " + position + "");
+                // 跳转至文字本文
+                Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                intent.putExtra(StatusEntity.class.getSimpleName(), mDataset.get(position));
+                getActivity().startActivity(intent);
+            }
+        });
+        // 这是自定义的CommentItem监听器，在HomepageListAdapter有匿名内部类
+        mAdapter.setOnCommentItemClickListener(new HomepageListAdapter
+                .OnCommentItemClickListener() {
+            @Override
+            public void onCommentItemClick(View v, int position) {
+                mStatusEntity = mDataset.get(position);
+                long id = mStatusEntity.id;
+                Intent intent = new Intent(getActivity(), ArticleCommentActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
+        // 这是自定义的RepostItem（转发）监听器，在HomepageListAdapter有匿名内部类
+        mAdapter.setOnRetweetItemClickListener(new HomepageListAdapter
+                .OnRetweetItemClickListener() {
+            @Override
+            public void onRetweetItemClick(View v, int position) {
+                Toast.makeText(getActivity(), getResources().getText(R.string.lbl_uncomolete),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        // 这是自定义的LikeItem（转发）监听器，在HomepageListAdapter有匿名内部类
+        mAdapter.setOnLikeItemClickListener(new HomepageListAdapter
+                .OnLikeItemClickListener() {
+            @Override
+            public void onLikeItemClick(View v, int position) {
+                Toast.makeText(getActivity(), getResources().getText(R.string.lbl_uncomolete),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         /**
          * 设置toolbar
          */

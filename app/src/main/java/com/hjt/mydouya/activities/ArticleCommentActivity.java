@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,16 @@ public class ArticleCommentActivity extends BaseActivity implements ArticleComme
          */
         getToolBar().setTitleVisible(false);
         getToolBar().setCustomTitle(R.string.lbl_others_comment);
+        getToolBar().setToolbarRightIcon(R.mipmap.ic_toolbar_write);
+        getToolBar().setToolbarRightIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WriteArticleCommentActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
+
         // 禁止drawerlayout 手势滑动
         getmDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
     }
