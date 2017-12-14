@@ -33,6 +33,7 @@
     <dimen name="avatar_size_l">60dp</dimen>
     <dimen name="avatar_size_xl">72dp</dimen>
     <dimen name="avatar_size_xxl">96dp</dimen>
+    <dimen name="avatar_size_xxxl">128dp</dimen>
 
 
 

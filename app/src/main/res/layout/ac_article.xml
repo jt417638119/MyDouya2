@@ -1,21 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.handmark.pulltorefresh.library.PullToRefreshScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <LinearLayout
+
+    <!-- 文章滑动框架 -->
+
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/rlvArticle"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <!-- 文本内容 -->
+            <include
+                android:id="@+id/llArticle"
+                layout="@layout/item_weibo_article"
+                />
 
-        <TextView
+            <!-- 评论数 -->
+            <LinearLayout
+                android:id="@+id/llCommentsCount"
+                android:layout_marginTop="@dimen/space_s"
+                android:layout_below="@id/llArticle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/cw_white"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:padding="@dimen/space_s"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_tv_comment"
+                    style="@style/tv_m_grey_sl"
+                    />
+                <TextView
+                    android:id="@+id/tvCommentsCount"
+                    android:paddingTop="@dimen/space_s"
+                    android:paddingBottom="@dimen/space_s"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/empty_string"
+                    style="@style/tv_m_grey_sl"
+                    />
+            </LinearLayout>
+
+
+            <!-- 评论列表 -->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rlvComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llCommentsCount"
+                android:layout_marginTop="@dimen/space_m">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+            <LinearLayout
+                android:id="@+id/llNoComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llCommentsCount"
+                android:visibility="gone"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/tvNoComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/avatar_size_xxxl"
+                    android:background="@color/cw_iv_bg_grey"
+                    android:gravity="center"
+                    android:text="还没有人评论"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/avatar_size_xxxl"
+                    />
+
+            </LinearLayout>
+
+            <!-- 多出一个view不会立刻进入下拉刷新 -->
+            <View
+                android:layout_below="@id/rlvComments"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_xxl"
+                />
+
+        </RelativeLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+    <!-- bottom toolbar -->
+    <LinearLayout
+        android:id="@+id/llBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/cw_white">
+
+        <com.hjt.mydouya.views.DrawCenterTextView
+            android:id="@+id/tvRepost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/empty_string"
-            android:textSize="@dimen/avatar_size_xl"
-            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:background="@drawable/bg_tv_selector"
+            android:clickable="true"
+            android:drawableLeft="@mipmap/ic_toolbar_icon_retweet"
+            android:drawablePadding="@dimen/space_s"
+            android:paddingBottom="@dimen/space_s"
+            android:paddingTop="@dimen/space_s"
+            android:text="@string/lbl_tv_repost"
+            android:textSize="@dimen/txt_m"
+            />
+
+        <View
+            android:layout_width="@dimen/height_divider"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/cw_grey"
+            />
+
+
+        <com.hjt.mydouya.views.DrawCenterTextView
+            android:id="@+id/tvComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_tv_selector"
+            android:clickable="true"
+            android:drawableLeft="@mipmap/ic_toolbar_icon_retweet"
+            android:drawablePadding="@dimen/space_s"
+            android:paddingBottom="@dimen/space_s"
+            android:paddingTop="@dimen/space_s"
+            android:text="@string/lbl_tv_comment"
+            android:textSize="@dimen/txt_m"
+            />
+
+        <View
+            android:layout_width="@dimen/height_divider"
+            android:layout_height="16dp"
+            android:background="@color/cw_grey"
+            android:layout_gravity="center_vertical"
+            />
+
+
+
+        <com.hjt.mydouya.views.DrawCenterTextView
+            android:id="@+id/tvLike"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_tv_selector"
+            android:clickable="true"
+            android:drawableLeft="@mipmap/ic_toolbar_icon_retweet"
+            android:drawablePadding="@dimen/space_s"
+            android:paddingBottom="@dimen/space_s"
+            android:paddingTop="@dimen/space_s"
+            android:text="@string/lbl_tv_like"
+            android:textSize="@dimen/txt_m"
             />
     </LinearLayout>
-</com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+</RelativeLayout>

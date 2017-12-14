@@ -98,7 +98,7 @@ public class HomepageListAdapter extends RecyclerView.Adapter {
                 homepageViewHolder.llRe.setVisibility(View.VISIBLE);
                 // 前面要加上被转发内容的作者，这样正则才能匹配并且换颜色
                 homepageViewHolder.tvReContent.setText(RichTextUtils.getRichText(mContext,
-                        "@" + reStatus.user.screen_name +""+reStatus.text)); // 内容
+                        "@" + reStatus.user.screen_name +"："+reStatus.text)); // 内容
                 // 要为text中标志的字段添加点击事件
                 homepageViewHolder.tvReContent.setMovementMethod(LinkMovementMethod.getInstance());
                 // 提取内容图片
